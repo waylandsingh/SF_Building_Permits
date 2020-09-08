@@ -1,0 +1,45 @@
+<!doctype html>
+<title>Building Permit Application Approval Prediction</title>
+<link rel=stylesheet type=text/css href='{{ url_for('static',filename='alt-style.css')}}'>
+<div class=page>
+  <h1>Building Application Approvals</h1>
+  <div class=metanav>
+
+    <h4>
+      Provide some information for your project to get an approval time prediction
+    </h4>
+
+    <form id='infoform' method='post' action='info_received' >
+      <p>
+    Text Description of Work: <textarea type='text' name='description' rows="4" cols="50">
+    Enter a brief description of your project
+    </textarea>
+      </p>
+      <p>
+    Estimate of Cost: <input type='text' name='cost' />
+    </p>
+    <p>
+    Single Line Address: <input type='text' name='address' />
+      </p>
+      <p>
+        Select your Neighborhood <select name= neighborhood method="GET" action="/">
+            {% for n in neighs %}
+            <option value= "{{n}}" SELECTED>{{n}}</option>"
+        {% endfor %}
+        </select>
+      </p>
+      <p>
+      Change in Number of Units?
+        <input type="radio"  name="units" value="0" checked>
+        <label for="no">No</label><br>
+        <input type="radio" name="units" value="1">
+        <label for="yes">Yes</label><br>
+      </p>
+      <p>
+    <input type='submit' value='Submit' />
+      </p>
+    </form>
+
+  </div>
+</div>
+</html>
