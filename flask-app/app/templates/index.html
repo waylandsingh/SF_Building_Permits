@@ -1,0 +1,216 @@
+{% extends "bootstrap/base.html" %}
+
+ 
+{% block styles %}
+{{super() }}
+  <!-- Bootstrap core CSS -->
+  <link rel="stylesheet"
+      href="{{url_for('.static', filename='bootstrap.min.css')}}">
+  <!-- Custom styles for this template -->
+    <link rel="stylesheet"
+      href="{{url_for('.static', filename='scrolling-nav.css')}}">
+ {% endblock %}
+ 
+{% block content %}
+
+ 
+<html lang="en">
+
+<head>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="">
+  <meta name="author" content="">
+
+  <title>Building Time</title>
+
+
+</head>
+
+<body id="page-top">
+
+  <!-- Navigation -->
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top" id="mainNav">
+    <div class="container">
+      <a class="navbar-brand js-scroll-trigger" href="#page-top" style='font-size:22px;'>&#127968 Building Time</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarResponsive">
+        <ul class="navbar-nav ml-auto">
+          <li class="nav-item">
+            <a class="nav-link js-scroll-trigger" href="#intro">Intro</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link js-scroll-trigger" href="#predict">Predict</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link js-scroll-trigger" href="#about">About</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link js-scroll-trigger" href="#contact">Contact</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+<!-- 
+  <header class="bg-primary text-white">
+    <div class="container text-center">
+      <h1>It's Building Time!</h1>
+      <p class="lead">How soon can I get going on my home remodelling project?</p>
+    </div>
+  </header>
+-->
+
+
+  <section id="predict" class="bg-light">
+    <div class="container">
+      <div class="row">
+        <div class="col">
+            <div class="container">
+          <div class="row">
+            <div class="col-lg-8 mx-auto">
+              <h2>When can I get to work?</h2>
+                    <form id='infoform' method='post' action='info_received' >
+                      <p>
+                        
+                      </p>
+                      <p><textarea type='text' name='description' rows="4" cols="50" placeholder="Enter a brief description of your project"></textarea></p>
+                          <p>
+                        Estimate of Cost: <input type='text' name='cost' />
+                        </p>
+                        <p>
+                        Single Line Address: <input type='text' name='address' />
+                          </p>
+                          <p>
+                            Select your Neighborhood <select name= neighborhood method="GET" action="/">
+                                something
+                                {% for n in neighs %}
+                                <option value= "{{n}}" SELECTED>{{n}}</option>"
+                            {% endfor %}
+                            </select>
+                          </p>
+                          <p>
+                          Change in Number of Units?
+                            <input type="radio"  name="units" value="0" checked>
+                            <label for="no">No</label><br>
+                            <input type="radio" name="units" value="1">
+                            <label for="yes">Yes</label><br>
+                          </p>
+                          <p>
+                        <input type='submit' value='Submit' />
+                      </p>
+                    </form>
+            </div>
+          </div>
+        </div>
+        </div>
+        <div class="col">
+                <div class="hero-unit">
+                  <h2>{{pred_h}}</h2>
+                  <p class="lead">{{pred_msg1}}</p>
+                  <p></p>
+                  <p class="lead">{{pred_msg2}}</p>
+                  <p>
+                    <!--
+                    <a class="btn btn-primary btn-large">
+                      Learn more
+                    </a>
+                    -->
+                  </p>
+                </div>
+        </div>
+      </div>
+</div>
+  </section>
+
+    <section id="intro">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 mx-auto">
+          <h2>About</h2>
+          <p class="lead">Let's give San Francisco remodellers a better shot at accomplishing their goals.<br>
+          Get a prediction for the approval time for your building permit application using:</p>
+          <ul>
+            <li>Building Permits - 12 years of applications, totalling over 270k entries (SF Dept of Building Inspection)</li>
+            <li>Detailed Property Information - including size & assessed value (SF Assessor’s Office)</li>
+            <li>A suite of machine learning techniques to turn past permits into actionable insight</li>
+            
+          </ul>
+		</div>
+		<div class="col-lg-8 mx-auto">
+		  <p class="lead">The city of San Francisco has a dataset detailing the permits for remodelling. In addition to permit approval times, this data has the potential to show us all sorts of interesting things about remodelling in S.F. including average costs, types of construction, and remodelling activity in different neighborhoods, seen below. </p>
+		  <img src= "{{url_for('.static', filename='map_permits_per_neighborhood.png')}}" alt="Italian Trulli">
+        </div>
+      </div>
+    </div>
+  </section>
+  
+  <section id="about">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 mx-auto">
+          <h2>How it Works</h2>
+		<div>
+		  <p class="lead">After cleaning the data, it appeared that few of the features of the properties themselves seemed correlated with wait times, so we focused on text descriptions of the jobs; by tokenizing using the NLP 'bag of words' approach, key words describing the construction objectives could be used as features in a machine learning model. </p>
+		  <p class="lead">As a final wrinkle, the approval times for permits was heavily skewed in favor of same day approvals (due to an 'over the counter' system), shown below in a truncated histogram of approval times: </p>
+		<br>
+		  <img src= "{{url_for('.static', filename='barchart.png')}}" alt="Italian Trulli">
+		<br>
+		<br>
+		<br>
+
+		  <p class="lead">This led to the decision to make model training easier by first classifying permits as same-day before predicting a specific number of days. The combined model performs reasonably well, with an predicting accurately within 11 days for the testing data. A flowchart detailing the steps in making a prediction is below:</p>
+          <img src= "{{url_for('.static', filename='flowchart.svg')}}" alt="Italian Trulli">
+		</div>
+        </div>
+      </div>
+    </div>
+  </section>
+  
+  <section id="contact">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 mx-auto">
+          <h2>Questions, Kudos, and Contact:</h2>
+          <p class="lead">Reach out to Wayland at 
+            <a href="wayland.minhas.singh@mg.thedataincubator.com">wayland.minhas.singh@mg.thedataincubator.com</a>
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="py-5 bg-dark">
+    <div class="container">
+      <p class="m-0 text-center text-white">Copyright &copy; Build Time is Now 2020</p>
+    </div>
+    <!-- /.container -->
+  </footer>
+
+
+</body>
+
+</html>
+
+
+{% endblock %}
+
+{% block scripts %}
+{{super() }}
+  <!-- Bootstrap core JavaScript  converted to flask-bootstrap accessible -->
+  
+  <script src="{{url_for('.static', filename='jquery.min.js')}}"></script>
+  <script src="{{url_for('.static', filename='bootstrap.bundle.min.js')}}"></script>
+
+
+  <!-- Plugin JavaScript -->
+  <script src="{{url_for('.static', filename='jquery.easing.min.js')}}"></script>
+
+  <!-- Custom JavaScript for this theme -->
+  <script src="{{url_for('.static', filename='scrolling-nav.js')}}"></script>
+
+{% endblock %}
