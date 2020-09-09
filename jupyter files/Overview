@@ -1,0 +1,11 @@
+Cleaning steps
+DONE Restrict to 30 years and save as CSV (consider - only years for which you have assessordata
+DONE restrict to single-family homes (and maybe appartments or condos - note that assessor data is for whole lots only, so applying this could be tricky for apts, condos)
+
+Check how well Assessor Data can merge onto single family homes
+addresses for a single family home should be pretty straightforward
+Do address lookup to get 'clean addresses' if needed
+
+
+
+Model Building
